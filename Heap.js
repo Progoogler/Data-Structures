@@ -7,11 +7,12 @@ Heap.prototype.swap = function(heap, firstIndex, secondIndex) {
 	this.heap[firstIndex] = this.heap[secondIndex];
 	this.heap[secondIndex] = temp; 
 };
-
+ 
 Heap.prototype.insert = function(obj) {
 // Insert an 'obj' with a "key" value maintaining the heap property that
 // every parent node of all its chidren, contains a lower key value than its childrens'
 // key values and each parent has only 0, 1 or 2 children nodes.
+	obj['key'] = key;
 	this.heap.push(obj);
 	// Push the 'obj' to the bottom-most leaf node in tree/array.
 	var length = this.heap.length;
@@ -88,24 +89,53 @@ Heap.prototype.extractMin = function() {
 	// Return the object with the lowest key value.
 }
 
-Heap.prototype.heapSort = function(array) {
-	// This function assumes that the heap operations above have been
-	// refactored to register 'key' as the array element's numeric value
-	// rather than its key property value.
-	var i, 
-		l = array.length, 
-		result;
+Heap.prototype.minHeapify = function(index) {
+// Restore Minimum Heap property where it's reportedly unbalanced at specified 'index'.
+	var min,
+		left,
+		right,
+		parent;
 
-	for (i = 0; i < l; i++) {
-		// Insert all elements of unsorted array into heap.
-		heap.insert(array[i]);
-		// Assuming that your heap is named 'heap'.
+	if ((index === 1 || index === 2)) {
+		// Set 'parent' to 0 for above cases because the equation sets 'parent' to -1 overwise.
+		parent = 0;
+	} else {
+		parent = (Math.floor((index + 1) / 2) - 1);
+		// The parent node above the current index node.
 	}
+	if (this.heap[index].key > this.heap[parent].key) { 
+		// Return control to function if the parent's key value is lower than the childNode's.
+		return;
+	} else if (this.heap[index].key < this.heap[parent].key) {
+		this.swap(this.heap, index, parent);
+		// Swap childNode with parent node if min-heap property is unbalanced.
+		if (parent === 0) {
+			return;
+		} else {
+			// Continue comparing key values of parent and childNodes until min-heap property is balanced.
+			this.minHeapify(parent);
+		}
+	} 
 
-	for (i = 0; i < l; i++) {
-		result.push(heap.extractMin());
-		// Each extracted element will be from lowest to highest order.
+	if ((2 * index) + 1 < this.heap.length) {
+		// For cases when node at 'index' definitely has at least one childNode.
+		left = (2 * index) + 1;
+		right = (2 * index) + 2;
+
+		if (this.heap[index].key > this.heap[left] || this.heap[index].key > this.heap[right]) {
+			if (left <= this.heap.length && this.heap[left].key < this.heap[index].key) {
+				min = left;
+			} else {
+				min = index;
+			}
+			if (right <= this.heap.length && this.heap[right].key < this.heap[min].key) {
+				min = right;
+			}
+			if (min !== index) {
+				// Swap indices of index and childNode when the min-heap property is unbalanced.
+				this.swap(this.heap, min, index);
+				this.minHeapify(min);
+			}
+		}
 	}
-
-	return result;
-}
+};
