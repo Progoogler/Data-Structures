@@ -114,7 +114,7 @@ HashTable.prototype.insert = function(key, value) {
 		keyCode += key.charCodeAt(i);
 	}
 	// Mod the 'keyCode' by the 'tableSize' to keep index values within
-	// the range of length of n.
+	// the range of the 'HashTable' length.
 	this.table[keyCode % this.tableSize].insertAsFirst(key, value);
 };
 
@@ -125,7 +125,7 @@ HashTable.prototype.find = function(key, value) {
 	}
 
 	if (typeof key !== 'string') {
-		throw "Input 'key' needs to be a string."
+		throw "Key input is required to be a string."
 	}
 
 	var result;
@@ -151,7 +151,7 @@ HashTable.prototype.delete = function(key, value) {
 	}
 
 	if (typeof key !== 'string') {
-		throw "Input 'key' needs to be a string."
+		throw "Key input is required to be a string."
 	}
 
 	var result;
