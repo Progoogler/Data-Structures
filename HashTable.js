@@ -20,7 +20,7 @@
 * space complexity of the data structure may be overlooked
 * for ease of implementation and deployment.
 * NOTE: Although memory capacity has increased ten-by-ten-fold
-* in recent and coming years, memory requires additional power,
+* in recent decades, memory requires additional power,
 * which may be an issue to weigh against performance. 
 *
 *
@@ -30,13 +30,13 @@
 * with all three operations running in O(1) time. This being my first
 * implementation of a hash table, I can not promise such extraordinary performance.
 *
-* var table = new hash.HashTable(20);
+* var table = new hash.HashTable(19);
 * table;
 * table.insert('Andy', "I'm the real Andy.");
 * table.insert('Andy', "No, I'm the real Andy!");
 * table.insert('Andy', "They are both clones of me.");
-* table.delete('Andy', "No, I'm the real Andy!");
 * table.delete('Andy', "I'm the real Andy.");
+* table.delete('Andy', "No, I'm the real Andy!");
 * table.find('Andy', "They are both clones of me.");
 *
 */
