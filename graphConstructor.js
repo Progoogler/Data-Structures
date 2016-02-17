@@ -16,18 +16,19 @@
 * Test case:
 *
 * var adjList = new graph.Graph();
-* for (var vx = 0; vx < 7; vx++) {
-*	  adjList.addVertex(vx);
-*  }
+* for (var vx = 0; vx < 7; vx++) {    
+*   adjList.addVertex(vx);
+* }
 * adjList.addEdge(1, 3, 5);
 * adjList.addEdge(4, 3, 3);
 * adjList.addEdge(2, 1, 2);
 * adjList.addEdge(3, 5, 8);
 * adjList.addEdge(5, 1, 1);
-* adjList.addEdge(2, 5, 4);
-* adjList.addEdge(0, 3, 9);
+* adjList.addEdge(2, 6, 4);
+* adjList.addEdge(0, 2, 9);
 * adjList.deleteVertex(3);
 * adjList.getVertices();
+* 
 */
 
 var graph = (function() {
@@ -61,7 +62,7 @@ var graph = (function() {
 
   Vertex.prototype.getWeight = function(weight) {
   	var neighbor = [];
-  	for (var v in this.connectedTo) { console.log(this.connectedTo)
+  	for (var v in this.connectedTo) {
   		if (this.connectedTo[v] === weight) {  
         neighbor.push(v + ": " + this.connectedTo[v]);
   		}
@@ -96,8 +97,12 @@ var graph = (function() {
 
   Graph.prototype.addEdge = function(vertexOne, vertexTwo, weight) {
   	var v, v1, v2;
-  	weight = weight || 0;
-    for (var v in this.vertexList) {
+    
+    if (!weight) {
+      throw "Include a third parameter to specify weight between vertices."
+    }
+
+    for (v in this.vertexList) {
     	if (v == vertexOne) {
     		v1 = vertexOne;
     	}
@@ -127,19 +132,24 @@ var graph = (function() {
   Graph.prototype.deleteVertex = function(vertex) {
   	var deleted;
   	for (var v in this.vertexList) {
-  		if (this.vertexList[v].connectedTo[vertex]);
+  		if (this.vertexList[v].connectedTo[vertex]) {
   		  delete(this.vertexList[v].connectedTo[vertex]);
-  	}  		
+  	  }  		
   		if (v == vertex) {
   			this.vertexCount -= 1;
   			deleted = v;
-  			delete(this.vertexList[v]);
   		}
-  	return deleted;
+    }
+
+    if (deleted) {
+      delete(this.vertexList[deleted]);
+  	  return deleted;
+    } else {
+      throw "Vertex " + vertex + " was not found."
+    }
   };
 
   return {
-  	Vertex: Vertex,
   	Graph: Graph
   };
 
