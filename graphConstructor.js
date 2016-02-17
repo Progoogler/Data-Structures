@@ -7,6 +7,12 @@
 * and 'connectedTo' is an object containing neighbor vertice properties
 * and their corresponding edge weight values.
 *
+* Note: The product of this type of graph representation is an adjacency
+* list rather than an adjacency matrix graph. The adjacency list graph
+* is much preferable for large graphs and optimally suitable for 
+* small graphs without the visual construct of a matrix, which for small
+* graphs, may be unnecessary considering its size.
+*
 * Test case:
 *
 * var adjList = new graph.Graph();
