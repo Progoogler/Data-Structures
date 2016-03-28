@@ -24,6 +24,7 @@
 class Queue {
 	constructor () {
 		this.queue = [];
+		this.backup;
 	}
 	enqueue(node) {
 		this.queue.push(node);
@@ -31,8 +32,11 @@ class Queue {
 	dequeue() {
 		return this.queue.shift();
 	}
+	getFront() {
+		return this.queue[0];
+	}
 	isEmpty() {
-		return this.queue.length > 0 ? false : true;
+		return this.queue.length === 0;
 	}
 	cut(node, position) {
 		this.queue.splice(position, 0, node);
@@ -42,5 +46,9 @@ class Queue {
 			return this.queue.splice(this.queue.indexOf(position), 1);
 		}
 		return this.queue.splice(position, 1);
+	}
+	clear() {
+		this.backup = this.queue;
+		this.queue = [];
 	}
 }
